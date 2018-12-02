@@ -50,6 +50,7 @@ void dna :: mutate(int num)
 
 void dna :: print_chain()
 {
+	cout<<"Print DNA sequence:"<<endl;
 	for (int t1=0; t1<length; t1++)
 		cout<<chain[t1]<<' ';
 	cout<<endl;
@@ -72,6 +73,7 @@ void code_dna :: init(int kk, int ptn, int digit)
 
 void code_dna :: print_code()
 {
+	cout<<"Print DNA to protein code:"<<endl;
 	for (int t1=0; t1<num_code; t1++)
 		cout<<t1<<":\t"<<code[t1]<<endl;
 }

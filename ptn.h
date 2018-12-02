@@ -16,4 +16,19 @@ public:
 	void print_chain();
 };
 
+class code_ptn
+{
+private:
+	int num_ptn;
+	int num_organ;
+	int num_digit;
+	int ** code;	// code_ptn is translated using similarity
+friend ptn;
+friend organ;
+public :
+	void init(int n_p, int n_organ, int n_digit);
+
+	void print_code();
+};
+
 #endif
