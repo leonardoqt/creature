@@ -62,3 +62,98 @@ void organ :: print_chain()
 		cout<<chain[t1]<<'\t'<<rate[t1]<<endl;
 }
 
+
+//===========================sensor========================
+void sensor :: init(int nn)
+{
+	double base_cost, base_harm;
+	int t1;
+	cost.init(nn);
+	harm.init(nn);
+	type = rand()%nn;
+	range = (rand()+1)/(double)RAND_MAX * 100;	// 0-100
+	num_check = rand()%10 + 1;					// 1-10
+	acc = (rand()+1)/(double)RAND_MAX;				// 0-1
+	// range influence base cost and harm
+	// num_check influence base cost
+	// acc influence base harm
+	// each organ only need and sufer from one
+	base_cost = range*0.25 + num_check*2.5;
+	base_harm = range*0.25 + acc * 25;
+	t1 = rand()%nn;
+	cost.list[t1] = base_cost + (rand()+1)/(double)RAND_MAX * (100-base_cost);
+	t1 = rand()%nn;
+	harm.list[t1] = base_harm + (rand()+1)/(double)RAND_MAX * (100-base_harm);
+}
+
+void sensor :: print()
+{
+	cout<<"Print sensor:--------------"<<endl;
+	cout<<"Type: "<<type<<endl;
+	cout<<"Range: "<<range<<endl;
+	cout<<"Check times: "<<num_check<<endl;
+	cout<<"Accuracy: "<<acc*100<<"%"<<endl;
+	cout<<"Cost: ";
+	cost.print();
+	cout<<"Harm: ";
+	harm.print();
+}
+
+//=========================mover============================
+void mover :: init(int nn)
+{
+	double base_cost, base_harm;
+	int t1;
+	cost.init(nn);
+	harm.init(nn);
+	type = rand()%nn;
+	acc = (rand()+1)/(double)RAND_MAX;
+	eff = (rand()+1)/(double)RAND_MAX;
+	base_cost = eff * 50;
+	base_harm = acc * 50;
+	t1 = rand()%nn;
+	cost.list[t1] = base_cost + (rand()+1)/(double)RAND_MAX * (100-base_cost);
+	t1 = rand()%nn;
+	harm.list[t1] = base_harm + (rand()+1)/(double)RAND_MAX * (100-base_harm);
+}
+
+void mover :: print()
+{
+	cout<<"Print mover:--------------"<<endl;
+	cout<<"Type: "<<type<<endl;
+	cout<<"Accuracy: "<<acc*100<<"%"<<endl;
+	cout<<"Efficiency: "<<eff*100<<"%"<<endl;
+	cout<<"Cost: ";
+	cost.print();
+	cout<<"Harm: ";
+	harm.print();
+}
+
+//========================collector=========================
+void collector :: init(int nn)
+{
+	double base_cost, base_harm;
+	int t1;
+	cost.init(nn);
+	harm.init(nn);
+	type = rand()%nn;
+	c_p = (rand()%2)*2-1;
+	cap = (rand()+1)/(double)RAND_MAX * 1000;
+	base_cost = base_harm = cap / 20;
+	t1 = rand()%nn;
+	cost.list[t1] = base_cost + (rand()+1)/(double)RAND_MAX * (100-base_cost);
+	t1 = rand()%nn;
+	harm.list[t1] = base_harm + (rand()+1)/(double)RAND_MAX * (100-base_harm);
+}
+
+void collector :: print()
+{
+	cout<<"Print collector:--------------"<<endl;
+	cout<<"Type: "<<type<<endl;
+	cout<<"C or P: "<<c_p<<endl;
+	cout<<"Effect: "<<cap<<endl;
+	cout<<"Cost: ";
+	cost.print();
+	cout<<"Harm: ";
+	harm.print();
+}

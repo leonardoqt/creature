@@ -8,6 +8,8 @@ class code_ptn;
 class organ;
 class sensor;
 class mover;
+class collector;
 class code_organ;
+class resource;
 
 #endif
