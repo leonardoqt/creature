@@ -6,5 +6,8 @@ class code_dna;
 class ptn;
 class code_ptn;
 class organ;
+class sensor;
+class mover;
+class code_organ;
 
 #endif
