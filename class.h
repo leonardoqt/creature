@@ -11,5 +11,7 @@ class mover;
 class collector;
 class code_organ;
 class resource;
+class creature;
+class map;
 
 #endif

@@ -3,3 +3,5 @@
 #include "ptn.h"
 #include "organ.h"
 #include "resource.h"
+#include "creature.h"
+#include "map.h"

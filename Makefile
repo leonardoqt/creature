@@ -12,7 +12,7 @@ vpath %.o obj
 OBJDIR=obj
 #SRCDIR=src
 
-OBJS = dna.o ptn.o organ.o resource.o
+OBJS = dna.o ptn.o organ.o resource.o map.o
 
 go.x               : main.o $(OBJS)
 	mkdir -p $(OBJDIR)
@@ -22,6 +22,7 @@ dna.o              : dna.h
 ptn.o              : ptn.h
 organ.o            : organ.h
 resource.o         : resource.h
+map.o              : map.h
 main.o             : main.cpp
 .PHONY: clean
 clean :

@@ -73,7 +73,19 @@ public :
 class code_organ
 {
 // this code map organ index to organ type(sensor, mover, etc), and basic function value, since it is complicated, sensor and mover will be defiend above
+// this code generate list of all organs
 private :
+	int num_organ;
+	int num_sensor;
+	int num_mover;
+	int num_collector;
+	sensor *ss;
+	mover *mm;
+	collector *cc;
+friend creature;
+public :
+	void init(int num, int num_signal);
+	void print();
 };
 
 #endif

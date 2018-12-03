@@ -157,3 +157,33 @@ void collector :: print()
 	cout<<"Harm: ";
 	harm.print();
 }
+
+//==========================code_organ========================
+void code_organ :: init(int num, int num_signal)
+{
+	num_organ = num;
+	num_sensor = num_mover = num / 3;
+	num_collector = num_organ - num_sensor - num_mover;
+	ss = new sensor[num_sensor];
+	mm = new mover[num_mover];
+	cc = new collector[num_collector];
+	for(int t1=0; t1<num_sensor; t1++)
+		ss[t1].init(num_signal);
+	for(int t1=0; t1<num_mover; t1++)
+		mm[t1].init(num_signal);
+	for(int t1=0; t1<num_collector; t1++)
+		cc[t1].init(num_signal);
+}
+
+void code_organ :: print()
+{
+	cout<<"Sensor: ========================="<<endl;
+	for(int t1=0; t1<num_sensor; t1++)
+		ss[t1].print();
+	cout<<"Mover: ========================="<<endl;
+	for(int t1=0; t1<num_sensor; t1++)
+		mm[t1].print();
+	cout<<"Collector: ========================="<<endl;
+	for(int t1=0; t1<num_sensor; t1++)
+		cc[t1].print();
+}

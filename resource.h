@@ -11,6 +11,7 @@ private :
 friend sensor;
 friend mover;
 friend collector;
+friend map;
 public :
 	resource();
 	~resource();
