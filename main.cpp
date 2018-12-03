@@ -40,17 +40,19 @@ int main()
 
 	double A = 200, k1 = 0.04, k2 = 0.01, fhi = 3.14;
 	int num_res = 1;
-	int num_cp = 2;
+	int num_cp = 4;
 	map m1;
 	resource r1;
 
 	m1.init(num_res, num_cp, A, k1, k2, fhi);
 	r1.init(num_res);
-	for(int t1=-700; t1<=700; t1+=25)
-	for(int t2=-700; t2<=700; t2+=25)
+
+	for(int t1=-700; t1<=700; t1+=10)
+	for(int t2=-700; t2<=700; t2+=10)
 	{
 		m1.value(t1,t2,r1);
 		cout<<t1<<'\t'<<t2<<'\t';
 		r1.print();
 	}
+
 }

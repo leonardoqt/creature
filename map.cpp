@@ -1,7 +1,10 @@
+#include <iostream>
 #include <cstdlib>
 #include <cmath>
 #include "map.h"
 #include "resource.h"
+
+using namespace std;
 
 void map :: init(int num_res, int cp, double max_A, double max_k1, double max_k2, double max_fhi)
 {
@@ -32,8 +35,8 @@ void map :: init(int num_res, int cp, double max_A, double max_k1, double max_k2
 			ky1[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_k2;
 			kx2[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_k2;
 			ky2[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_k1;
-			fhi1[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_k2;
-			fhi2[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_k1;
+			fhi1[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_fhi;
+			fhi2[t1][t2] = ((rand()/(double)RAND_MAX)*2-1) * max_fhi;
 		}
 }
 
@@ -43,6 +46,13 @@ void map :: value(double x, double y, resource& rr)
 	{
 		rr.list[t1] = 0;
 		for(int t2=0; t2<num_cp; t2++)
-			rr.list[t2] += A[t2][t1]*sin(kx1[t2][t1]*x+ky1[t2][t1]*y+fhi1[t2][t1])*cos(ky2[t2][t1]*y-kx2[t2][t1]*x+fhi2[t2][t1]);
+			rr.list[t1] += A[t2][t1]*sin(kx1[t2][t1]*x+ky1[t2][t1]*y+fhi1[t2][t1])*cos(ky2[t2][t1]*y-kx2[t2][t1]*x+fhi2[t2][t1]);
 	}
+}
+
+void map :: print()
+{
+	for(int t1=0; t1<num_resource; t1++)
+		for(int t2=0; t2<num_cp; t2++)
+			cout<<A[t2][t1]<<'\t'<<kx1[t2][t1]<<'\t'<<ky1[t2][t1]<<'\t'<<fhi1[t2][t1]<<'\t'<<ky2[t2][t1]<<'\t'<<kx2[t2][t1]<<'\t'<<fhi2[t2][t1]<<endl;
 }

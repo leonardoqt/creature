@@ -12,5 +12,7 @@ private :
 public :
 	void init(int num_res, int cp, double max_A, double max_k1, double max_k2, double max_fhi);
 	void value(double x, double y, resource& rr);
+
+	void print();
 };
 #endif
