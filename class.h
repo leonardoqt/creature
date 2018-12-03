@@ -1,17 +1,20 @@
 #ifndef MY_CLASS
 #define MY_CLASS
 
-class dna;
+// one time object
 class code_dna;
-class ptn;
 class code_ptn;
-class organ;
 class sensor;
 class mover;
 class collector;
 class code_organ;
+class map;
+
+// dynamic object
+class dna;
+class ptn;
+class organ;
 class resource;
 class creature;
-class map;
 
 #endif

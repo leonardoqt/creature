@@ -10,6 +10,12 @@ ptn :: ptn()
 	chain = nullptr;
 }
 
+ptn :: ~ptn()
+{
+	if (chain != nullptr)
+		delete[] chain;
+}
+
 void ptn :: translate(dna& d1, code_dna& c1)
 {
 	length = d1.length/c1.num_digit;

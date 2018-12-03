@@ -11,6 +11,14 @@ organ :: organ()
 	rate = nullptr;
 }
 
+organ :: ~organ()
+{
+	if (chain != nullptr)
+		delete[] chain;
+	if (rate != nullptr)
+		delete[] rate;
+}
+
 void organ :: translate(ptn& ptn0, code_ptn& code)
 {
 	int dis_min, dis_current;

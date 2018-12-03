@@ -10,8 +10,10 @@ private:
 	int num_k;
 	int * chain;
 friend organ;
+friend creature;
 public:
 	ptn();
+	~ptn();
 	void translate(dna&, code_dna&);
 
 	void print_chain();
@@ -25,6 +27,7 @@ private:
 	int num_digit;
 	int ** code;	// code_ptn is translated using similarity
 friend organ;
+friend creature;
 public :
 	void init(int n_p, int n_organ, int n_digit);
 

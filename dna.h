@@ -11,6 +11,7 @@ private :
 	int *chain;
 friend code_dna;
 friend ptn;
+friend creature;
 public :
 	dna();
 	~dna();
@@ -31,6 +32,7 @@ private :
 	int * code;
 friend dna;
 friend ptn;
+friend creature;
 public :
 	void init(int kk, int ptn, int digit);
 //	add save and load

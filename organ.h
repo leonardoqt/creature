@@ -10,8 +10,10 @@ private :
 	int num_organ;
 	int * chain;
 	double * rate;
+friend creature;
 public :
 	organ();
+	~organ();
 	void translate(ptn&, code_ptn&);
 
 	void print_chain();
@@ -31,6 +33,7 @@ private :
 	double acc;
 	resource cost;
 	resource harm;
+friend creature;
 public :
 	void init(int nn); 	// number of total type of signals
 	void print();
@@ -48,6 +51,7 @@ private :
 	double eff;		// same to eff
 	resource cost;
 	resource harm;
+friend creature;
 public :
 	void init(int nn);
 	void print();
@@ -65,6 +69,7 @@ private :
 	double cap;
 	resource cost;
 	resource harm;
+friend creature;
 public :
 	void init(int nn);
 	void print();

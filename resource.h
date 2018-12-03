@@ -12,6 +12,7 @@ friend sensor;
 friend mover;
 friend collector;
 friend map;
+friend creature;
 public :
 	resource();
 	~resource();
