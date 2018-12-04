@@ -28,6 +28,20 @@ void resource :: clean()
 		list[t1] = 0;
 }
 
+ofstream& operator<<(ofstream& out, resource& A)
+{
+	for(int t1=0; t1<A.num; t1++)
+		out<<A.list[t1]<<'\t';
+	return out;
+}
+
+ifstream& operator>>(ifstream& in, resource& A)
+{
+	for(int t1=0; t1<A.num; t1++)
+		in>>A.list[t1];
+	return in;
+}
+
 void resource :: print()
 {
 	for(int t1=0; t1<num; t1++)

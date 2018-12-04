@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
 #include <cstdlib>
 #include "organ.h"
 #include "ptn.h"
@@ -169,6 +171,7 @@ void collector :: print()
 //==========================code_organ========================
 void code_organ :: init(int num, int num_signal)
 {
+	num_resource = num_signal;
 	num_organ = num;
 	num_sensor = num_mover = num / 3;
 	num_collector = num_organ - num_sensor - num_mover;
@@ -181,6 +184,78 @@ void code_organ :: init(int num, int num_signal)
 		mm[t1].init(num_signal);
 	for(int t1=0; t1<num_collector; t1++)
 		cc[t1].init(num_signal);
+}
+
+void code_organ :: save(ofstream& out)
+{
+	out<<"num_resource "<<num_resource<<endl;
+	out<<"num_organ "<<num_organ<<endl;
+	out<<"num_sensor "<<num_sensor<<endl;
+	out<<"num_mover "<<num_mover<<endl;
+	out<<"num_collector "<<num_collector<<endl;
+	out<<"begin_code"<<endl;
+	for(int t1=0; t1<num_sensor; t1++)
+	{
+		out<<"sensor_"<<t1<<'_'<<t1<<endl;
+		out<<ss[t1].type<<'\t'<<ss[t1].range<<'\t'<<ss[t1].num_check<<'\t'<<ss[t1].acc<<endl;
+		out<<ss[t1].cost<<endl;
+		out<<ss[t1].harm<<endl;
+	}
+	for(int t1=0; t1<num_mover; t1++)
+	{
+		out<<"mover_"<<t1<<'_'<<t1+num_sensor<<endl;
+		out<<mm[t1].type<<'\t'<<mm[t1].acc<<'\t'<<mm[t1].eff<<endl;
+		out<<mm[t1].cost<<endl;
+		out<<mm[t1].harm<<endl;
+	}
+	for(int t1=0; t1<num_collector; t1++)
+	{
+		out<<"collector_"<<t1<<'_'<<t1+num_sensor+num_mover<<endl;
+		out<<cc[t1].type<<'\t'<<cc[t1].c_p<<'\t'<<cc[t1].cap<<endl;
+		out<<cc[t1].cost<<endl;
+		out<<cc[t1].harm<<endl;
+	}
+}
+
+void code_organ :: load(ifstream& in)
+{
+	string tmp;
+	in>>tmp>>num_resource;
+	in>>tmp>>num_organ;
+	in>>tmp>>num_sensor;
+	in>>tmp>>num_mover;
+	in>>tmp>>num_collector;
+	ss = new sensor[num_sensor];
+	mm = new mover[num_mover];
+	cc = new collector[num_collector];
+	for(int t1=0; t1<num_sensor; t1++)
+		ss[t1].init(num_resource);
+	for(int t1=0; t1<num_mover; t1++)
+		mm[t1].init(num_resource);
+	for(int t1=0; t1<num_collector; t1++)
+		cc[t1].init(num_resource);
+	in>>tmp;
+	for(int t1=0; t1<num_sensor; t1++)
+	{
+		in>>tmp;
+		in>>ss[t1].type>>ss[t1].range>>ss[t1].num_check>>ss[t1].acc;
+		in>>ss[t1].cost;
+		in>>ss[t1].harm;
+	}
+	for(int t1=0; t1<num_mover; t1++)
+	{
+		in>>tmp;
+		in>>mm[t1].type>>mm[t1].acc>>mm[t1].eff;
+		in>>mm[t1].cost;
+		in>>mm[t1].harm;
+	}
+	for(int t1=0; t1<num_collector; t1++)
+	{
+		in>>tmp;
+		in>>cc[t1].type>>cc[t1].c_p>>cc[t1].cap;
+		in>>cc[t1].cost;
+		in>>cc[t1].harm;
+	}
 }
 
 void code_organ :: print()

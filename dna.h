@@ -2,6 +2,7 @@
 #define DNA
 
 #include "class.h"
+#include <fstream>
 
 class dna
 {
@@ -36,6 +37,8 @@ friend creature;
 public :
 	void init(int kk, int ptn, int digit);
 //	add save and load
+	void save(std::ofstream & out);
+	void load(std::ifstream & in);
 
 	void print_code();
 };

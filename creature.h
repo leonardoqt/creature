@@ -26,7 +26,7 @@ private :
 	resource cost, harm;
 	resource stock, damage;
 public :
-	void init(int num_resource, code_dna&, code_ptn&, code_organ&);
+	void init(int num_resource, code_dna*, code_ptn*, code_organ*);
 	void dna_init(int length);
 	void translate();
 	void travel(map& map0);

@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <cstring>
 #include "dna.h"
 
 using namespace std;
@@ -69,6 +71,34 @@ void code_dna :: init(int kk, int ptn, int digit)
 	code = new int[num_code];
 	for(int t1=0; t1<num_code; t1++)
 		code[t1] = rand()%num_ptn;
+}
+
+void code_dna :: save(ofstream& out)
+{
+	out<<"num_k "<<num_k<<endl;
+	out<<"num_ptn "<<num_ptn<<endl;
+	out<<"num_digit "<<num_digit<<endl;
+	out<<"num_code "<<num_code<<endl;
+	out<<"begin_code "<<endl;
+	for(int t1=0; t1<num_code; t1++)
+	{
+		out<<code[t1]<<'\t';
+		if((t1+1)%num_k == 0)
+			out<<endl;
+	}
+}
+
+void code_dna :: load(ifstream& in)
+{
+	string tmp;
+	in>>tmp>>num_k;
+	in>>tmp>>num_ptn;
+	in>>tmp>>num_digit;
+	in>>tmp>>num_code;
+	code = new int[num_code];
+	in>>tmp;
+	for(int t1=0; t1<num_code; t1++)
+		in>>code[t1];
 }
 
 void code_dna :: print_code()

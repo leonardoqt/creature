@@ -1,6 +1,7 @@
 #ifndef ORGAN
 #define ORGAN
 
+#include <fstream>
 #include "class.h"
 #include "resource.h"
 
@@ -33,6 +34,7 @@ private :
 	double acc;
 	resource cost;
 	resource harm;
+friend code_organ;
 friend creature;
 public :
 	void init(int nn); 	// number of total type of signals
@@ -51,6 +53,7 @@ private :
 	double eff;		// same to eff
 	resource cost;
 	resource harm;
+friend code_organ;
 friend creature;
 public :
 	void init(int nn);
@@ -69,6 +72,7 @@ private :
 	double cap;
 	resource cost;
 	resource harm;
+friend code_organ;
 friend creature;
 public :
 	void init(int nn);
@@ -80,6 +84,7 @@ class code_organ
 // this code map organ index to organ type(sensor, mover, etc), and basic function value, since it is complicated, sensor and mover will be defiend above
 // this code generate list of all organs
 private :
+	int num_resource;
 	int num_organ;
 	int num_sensor;
 	int num_mover;
@@ -90,6 +95,8 @@ private :
 friend creature;
 public :
 	void init(int num, int num_signal);
+	void save(std::ofstream& out);
+	void load(std::ifstream& in);
 	void print();
 };
 

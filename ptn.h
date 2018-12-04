@@ -2,6 +2,7 @@
 #define PTN
 
 #include "class.h"
+#include <fstream>
 
 class ptn
 {
@@ -30,6 +31,8 @@ friend organ;
 friend creature;
 public :
 	void init(int n_p, int n_organ, int n_digit);
+	void save(std::ofstream& out);
+	void load(std::ifstream& in);
 
 	void print_code();
 };

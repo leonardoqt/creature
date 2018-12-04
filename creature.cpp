@@ -5,12 +5,12 @@
 
 using namespace std;
 
-void creature :: init(int num_resource, code_dna& cdd, code_ptn& cpp, code_organ& coo)
+void creature :: init(int num_resource, code_dna* cdd, code_ptn* cpp, code_organ* coo)
 {
 	num_r = num_resource;
-	cd = &cdd;
-	cp = &cpp;
-	co = &coo;
+	cd = cdd;
+	cp = cpp;
+	co = coo;
 	s_range.init(num_r);
 	s_acc.init(num_r);
 	s_num.init(num_r);

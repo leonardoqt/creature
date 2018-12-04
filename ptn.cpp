@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
 #include <cstdlib>
 #include "ptn.h"
 #include "dna.h"
@@ -59,6 +61,35 @@ void code_ptn :: init(int n_p, int n_organ, int n_digit)
 	for(int t1=0; t1<num_organ; t1++)
 		for(int t2=0; t2<num_digit; t2++)
 			code[t1][t2] = rand()%num_ptn;
+}
+
+void code_ptn :: save(ofstream& out)
+{
+	out<<"num_ptn "<<num_ptn<<endl;
+	out<<"num_organ "<<num_organ<<endl;
+	out<<"num_digit "<<num_digit<<endl;
+	out<<"begin_code"<<endl;
+	for(int t1=0; t1<num_organ; t1++)
+	{
+		for(int t2=0; t2<num_digit; t2++)
+			out<<code[t1][t2]<<'\t';
+		out<<endl;
+	}
+}
+
+void code_ptn :: load(ifstream& in)
+{
+	string tmp;
+	in>>tmp>>num_ptn;
+	in>>tmp>>num_organ;
+	in>>tmp>>num_digit;
+	code = new int*[num_organ];
+	for(int t1=0; t1<num_organ; t1++)
+		code[t1] = new int[num_digit];
+	in>>tmp;
+	for(int t1=0; t1<num_organ; t1++)
+	for(int t2=0; t2<num_digit; t2++)
+		in>>code[t1][t2];
 }
 
 void code_ptn :: print_code()

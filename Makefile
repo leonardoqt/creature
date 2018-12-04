@@ -27,4 +27,4 @@ creature.o         : creature.h
 main.o             : main.cpp
 .PHONY: clean
 clean :
-	rm -rf *.x *.o $(OBJDIR)
+	rm -rf *.x *.o *.dat $(OBJDIR)
