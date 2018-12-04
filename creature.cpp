@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <cmath>
 #include "creature.h"
@@ -141,7 +142,9 @@ void creature :: travel(map& map0)
 	for(int t1=0; t1<num_r; t1++)
 	{
 		// use sensor to search for most resource-abundent place
-		res_max = 0;
+		map0.value(x,y,rr_tmp);
+		res_max = rr_tmp.list[t1]*s_acc.list[t1]+(rand()/(double)RAND_MAX)*rr_tmp.list[t1]*(1-s_acc.list[t1]);
+//		res_max = 0;
 		x_max = 0;
 		y_max = 0;
 		for(int t2=0; t2<s_num.list[t1]; t2++)
@@ -156,7 +159,7 @@ void creature :: travel(map& map0)
 			}
 			// get new xy
 			x_tmp = x+x_add;
-			y_tmp = y+x_add;
+			y_tmp = y+y_add;
 			// find value
 			map0.value(x_tmp,y_tmp,rr_tmp);
 			res_tmp = rr_tmp.list[t1]*s_acc.list[t1]+(rand()/(double)RAND_MAX)*rr_tmp.list[t1]*(1-s_acc.list[t1]);
@@ -193,6 +196,16 @@ void creature :: travel(map& map0)
 //	for(int t1=0; t1<num_r; t1++)
 //		cout<<stock.list[t1]<<'\t'<<damage.list[t1]<<'\t';
 //	cout<<endl;
+}
+
+void creature :: save_dna(ofstream& out)
+{
+	dna0.save(out);
+}
+
+void creature :: load_dna(ifstream& in)
+{
+	dna0.load(in);
 }
 
 void creature :: print()

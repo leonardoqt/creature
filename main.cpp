@@ -20,15 +20,24 @@ int main()
 	code_dna cd1;
 	code_ptn cp1;
 	code_organ co1;
-	creature being[3];
+	creature being[1];
+	// for map
+	double A = 500, k1 = 0.04, k2 = 0.01, fhi = 3.14;
+	int num_cp = 4;
+	map m1;
+	// for load/save
 	int ini_from_file = 0;
 
 	ifstream in_cd;
 	ifstream in_cp;
 	ifstream in_co;
+	ifstream in_dna;
+	ifstream in_map;
 	ofstream out_cd;
 	ofstream out_cp;
 	ofstream out_co;
+	ofstream out_dna;
+	ofstream out_map;
 
 	cin>>ini_from_file;
 	if (ini_from_file)
@@ -36,42 +45,53 @@ int main()
 		in_cd.open("code_dna.dat");
 		in_cp.open("code_ptn.dat");
 		in_co.open("code_organ.dat");
+		in_dna.open("dna.dat");
+		in_map.open("map.dat");
 
 		cd1.load(in_cd);
 		cp1.load(in_cp);
 		co1.load(in_co);
+		m1.load(in_map);
 	}
 	else
 	{
 		out_cd.open("code_dna.dat");
 		out_cp.open("code_ptn.dat");
 		out_co.open("code_organ.dat");
+		out_dna.open("dna.dat");
+		out_map.open("map.dat");
 
 		cd1.init(num_k,num_ptn,digit);
 		cp1.init(num_ptn, num_organ, len_gene);
 		co1.init(num_organ, num_resource);
+		m1.init(num_resource, num_cp, A, k1, k2, fhi);
 
 		cd1.save(out_cd);
 		cp1.save(out_cp);
 		co1.save(out_co);
+		m1.save(out_map);
 	}
 
-	for(int t1=0; t1<3; t1++)
+	for(int t1=0; t1<1; t1++)
 	{
-		being[t1].init(num_resource,&cd1,&cp1,&co1);
-		being[t1].dna_init(ll);
+		being[t1].init(m1.num_resource,&cd1,&cp1,&co1);
+		if (ini_from_file)
+			being[t1].load_dna(in_dna);
+		else
+		{
+			being[t1].dna_init(ll);
+			being[t1].save_dna(out_dna);
+		}
 		being[t1].translate();
 	}
 	being[0].print();
 
-	double A = 500, k1 = 0.04, k2 = 0.01, fhi = 3.14;
-	int num_cp = 4;
-	map m1;
-	m1.init(num_resource, num_cp, A, k1, k2, fhi);
-	for(int t1=0; t1<100; t1++)
+	for(int t1=0; t1<100000; t1++)
 	{
-//		cout<<t1<<'\t';
 		being[0].travel(m1);
+		cout<<being[0].x<<'\t'<<being[0].y<<endl;
+		if((t1+1)%10000 == 0)
+			cout<<endl;
 	}
 
 //print map

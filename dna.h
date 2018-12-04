@@ -20,6 +20,8 @@ public :
 	dna& operator=(const dna& );
 	void mutate(int num);
 
+	void save(std::ofstream & out);
+	void load(std::ifstream & in);
 	void print_chain();
 };
 
@@ -36,10 +38,9 @@ friend ptn;
 friend creature;
 public :
 	void init(int kk, int ptn, int digit);
-//	add save and load
+
 	void save(std::ofstream & out);
 	void load(std::ifstream & in);
-
 	void print_code();
 };
 

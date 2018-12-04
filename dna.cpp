@@ -50,6 +50,30 @@ void dna :: mutate(int num)
 	}
 }
 
+void dna :: save(ofstream& out)
+{
+	out<<"DNA_info"<<endl;
+	out<<length<<'\t'<<num_k<<endl;
+	for(int t1=0; t1<length; t1++)
+		out<<chain[t1]<<' ';
+	out<<endl;
+}
+
+void dna :: load(ifstream& in)
+{
+	string tmp;
+	string label = "DNA_info";
+	getline(in,tmp);
+	while(tmp.find(label) == string::npos)
+		getline(in,tmp);
+	in>>length>>num_k;
+	if(chain != nullptr)
+		delete[] chain;
+	chain = new int[length];
+	for(int t1=0; t1<length; t1++)
+		in>>chain[t1];
+}
+
 void dna :: print_chain()
 {
 	cout<<"Print DNA sequence:"<<endl;

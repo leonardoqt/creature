@@ -95,6 +95,7 @@ private :
 friend creature;
 public :
 	void init(int num, int num_signal);
+
 	void save(std::ofstream& out);
 	void load(std::ifstream& in);
 	void print();
