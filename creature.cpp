@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
 #include "creature.h"
 
 using namespace std;
@@ -18,6 +20,10 @@ void creature :: init(int num_resource, code_dna& cdd, code_ptn& cpp, code_organ
 	c_p_cap.init(num_r);
 	cost.init(num_r);
 	harm.init(num_r);
+	stock.init(num_r);
+	damage.init(num_r);
+	// right now set default value for x,y to be zero
+	x = y = 0;
 } 
 
 void creature :: dna_init(int length)
@@ -108,7 +114,7 @@ void creature :: translate()
 		// for sensor
 		if (s_range_max.list[t1]*s_acc_max.list[t1] > 0)
 		{
-			s_num.list[t1] = s_range.list[t1] / s_range_max.list[t1] / s_acc_max.list[t1] + 1;
+			s_num.list[t1] = s_range.list[t1] / s_range_max.list[t1] / s_acc_max.list[t1];
 			s_range.list[t1] = s_range_max.list[t1];
 			s_acc.list[t1] = s_acc_max.list[t1];
 		}
@@ -122,6 +128,71 @@ void creature :: translate()
 		m_acc.list[t1] = 1 - m_acc.list[t1];
 		m_eff.list[t1] = 1 - m_eff.list[t1];
 	}
+}
+
+void creature :: travel(map& map0)
+{
+	double x_max,y_max,res_max;
+	double x_tmp,y_tmp,res_tmp;
+	double x_add,y_add;
+	resource rr_tmp;
+	rr_tmp.init(num_r);
+	// loop for each type of resource
+	for(int t1=0; t1<num_r; t1++)
+	{
+		// use sensor to search for most resource-abundent place
+		res_max = 0;
+		x_max = 0;
+		y_max = 0;
+		for(int t2=0; t2<s_num.list[t1]; t2++)
+		{
+			// generate random search site
+			x_add = (rand()/(double)RAND_MAX*2-1)*s_range.list[t1];
+			y_add = (rand()/(double)RAND_MAX*2-1)*s_range.list[t1];
+			while(sqrt(x_add*x_add+y_add*y_add) > s_range.list[t1])
+			{
+				x_add = (rand()/(double)RAND_MAX*2-1)*s_range.list[t1];
+				y_add = (rand()/(double)RAND_MAX*2-1)*s_range.list[t1];
+			}
+			// get new xy
+			x_tmp = x+x_add;
+			y_tmp = y+x_add;
+			// find value
+			map0.value(x_tmp,y_tmp,rr_tmp);
+			res_tmp = rr_tmp.list[t1]*s_acc.list[t1]+(rand()/(double)RAND_MAX)*rr_tmp.list[t1]*(1-s_acc.list[t1]);
+			// greedy
+			if(res_max < res_tmp)
+			{
+				res_max = res_tmp;
+				x_max = x_add;
+				y_max = y_add;
+			}
+		}
+		// move itself to the place
+		x_add = x_max*m_acc.list[t1]+(rand()/(double)RAND_MAX)*x_max*(1-m_acc.list[t1]);
+		y_add = y_max*m_acc.list[t1]+(rand()/(double)RAND_MAX)*y_max*(1-m_acc.list[t1]);
+		x = x + x_add*m_eff.list[t1];
+		y = y + y_add*m_eff.list[t1];
+
+		// take resource, suffer damage
+		map0.value(x,y,rr_tmp);
+		// collect current resource
+		if (c_c_cap.list[t1] > rr_tmp.list[t1])
+			stock.list[t1] += rr_tmp.list[t1];
+		else
+			stock.list[t1] += c_c_cap.list[t1];
+		for(int t2=0; t2<num_r; t2++)
+		{
+			// cost resource as long as move
+			stock.list[t2] -= cost.list[t2]/num_r;
+			// damage is the remaining after guarded by c_p_cap
+			if (c_p_cap.list[t2] < rr_tmp.list[t2])
+				damage.list[t2] += rr_tmp.list[t2] - c_p_cap.list[t2];
+		}
+	}
+//	for(int t1=0; t1<num_r; t1++)
+//		cout<<stock.list[t1]<<'\t'<<damage.list[t1]<<'\t';
+//	cout<<endl;
 }
 
 void creature :: print()

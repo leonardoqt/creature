@@ -18,19 +18,31 @@ int main()
 	code_dna cd1;
 	code_ptn cp1;
 	code_organ cg1;
-	creature being[10];
+	creature being[1];
 
 	cd1.init(num_k,num_ptn,digit);
 	cp1.init(num_ptn, num_organ, len_gene);
 	cg1.init(num_organ, num_resource);
 
-	for(int t1=0; t1<10; t1++)
+	for(int t1=0; t1<1; t1++)
 	{
 		being[t1].init(num_resource,cd1, cp1, cg1);
 		being[t1].dna_init(ll);
 		being[t1].translate();
 	}
-	being[9].print();
+	being[0].print();
+
+	double A = 500, k1 = 0.04, k2 = 0.01, fhi = 3.14;
+	int num_cp = 4;
+	map m1;
+	m1.init(num_resource, num_cp, A, k1, k2, fhi);
+	for(int t1=0; t1<100000; t1++)
+	{
+		if (t1%10000 == 0)
+			cout<<endl;
+		cout<<t1<<'\t';
+		being[0].travel(m1);
+	}
 
 //print map
 /*

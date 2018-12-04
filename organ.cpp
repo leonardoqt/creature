@@ -146,7 +146,7 @@ void collector :: init(int nn)
 	harm.init(nn);
 	type = rand()%nn;
 	c_p = (rand()%2)*2-1;
-	cap = (rand()+1)/(double)RAND_MAX * 1000;
+	cap = (rand()+1)/(double)RAND_MAX * 5000;
 	base_cost = base_harm = cap / 20;
 	t1 = rand()%nn;
 	cost.list[t1] = base_cost + (rand()+1)/(double)RAND_MAX * (100-base_cost);

@@ -17,6 +17,7 @@ public :
 	resource();
 	~resource();
 	void init(int nn);
+	void clean();
 	void print();
 };
 #endif

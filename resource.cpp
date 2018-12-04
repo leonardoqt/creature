@@ -22,6 +22,12 @@ void resource  :: init(int nn)
 		list[t1] = 0;
 }
 
+void resource :: clean()
+{
+	for(int t1=0; t1<num; t1++)
+		list[t1] = 0;
+}
+
 void resource :: print()
 {
 	for(int t1=0; t1<num; t1++)

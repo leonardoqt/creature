@@ -46,7 +46,7 @@ void map :: value(double x, double y, resource& rr)
 	{
 		rr.list[t1] = 0;
 		for(int t2=0; t2<num_cp; t2++)
-			rr.list[t1] += A[t2][t1]*sin(kx1[t2][t1]*x+ky1[t2][t1]*y+fhi1[t2][t1])*cos(ky2[t2][t1]*y-kx2[t2][t1]*x+fhi2[t2][t1]);
+			rr.list[t1] += A[t2][t1]*(1+sin(kx1[t2][t1]*x+ky1[t2][t1]*y+fhi1[t2][t1])*cos(ky2[t2][t1]*y-kx2[t2][t1]*x+fhi2[t2][t1]));
 	}
 }
 
