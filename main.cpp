@@ -10,6 +10,7 @@ int main()
 {
 	srand(time(0));
 //	srand(0);
+	// initial param
 	int ll = 300;
 	int num_k = 4;
 	int num_ptn = 20;
@@ -17,14 +18,28 @@ int main()
 	int num_organ = 90000;
 	int len_gene = 9;
 	int num_resource = 2;
+	int num_creature_opt = 100;
+	int num_creature = num_creature_opt;
+	int num_creature_next;
+	// code
 	code_dna cd1;
 	code_ptn cp1;
 	code_organ co1;
-	creature being[1];
+	// creature
+	creature *being, *being_next;
+	// born rate
+	double *weight=nullptr;		// use living_advantage to calculate, propotional to (current-min+1)
+	double weight_sum;
+	int *num_born=nullptr;
+	double max_la, min_la;
 	// for map
 	double A = 500, k1 = 0.04, k2 = 0.01, fhi = 3.14;
 	int num_cp = 4;
 	map m1;
+	// for move
+	int move_max = 10000;
+	// for generation
+	int gen_max = 20;
 	// for load/save
 	int ini_from_file = 0;
 
@@ -72,7 +87,9 @@ int main()
 		m1.save(out_map);
 	}
 
-	for(int t1=0; t1<1; t1++)
+	// prepare for creatures
+	being = new creature[num_creature];
+	for(int t1=0; t1<num_creature; t1++)
 	{
 		being[t1].init(m1.num_resource,&cd1,&cp1,&co1);
 		if (ini_from_file)
@@ -84,33 +101,76 @@ int main()
 		}
 		being[t1].translate();
 	}
-	being[0].print();
 
-	for(int t1=0; t1<100000; t1++)
+	// the trip of one generation
+	for(int t1=0; t1<num_creature; t1++)
 	{
-		being[0].travel(m1);
-		cout<<being[0].x<<'\t'<<being[0].y<<endl;
-		if((t1+1)%10000 == 0)
-			cout<<endl;
+		for(int t2=0; t2<move_max; t2++)
+			being[t1].travel(m1);
+		being[t1].surviving();
+//		cout<<being[t1].x<<'\t'<<being[t1].y<<endl;
 	}
+//	cout<<endl;
 
-//print map
-/*
-	double A = 200, k1 = 0.04, k2 = 0.01, fhi = 3.14;
-	int num_res = 1;
-	int num_cp = 4;
-	map m1;
-	resource r1;
-
-	m1.init(num_res, num_cp, A, k1, k2, fhi);
-	r1.init(num_res);
-
-	for(int t1=-700; t1<=700; t1+=10)
-	for(int t2=-700; t2<=700; t2+=10)
+	for (int num_gen=0; num_gen<gen_max; num_gen++)
 	{
-		m1.value(t1,t2,r1);
-		cout<<t1<<'\t'<<t2<<'\t';
-		r1.print();
+		// get next generation
+		if (weight != nullptr)
+			delete[] weight;
+		if (num_born != nullptr)
+			delete[] num_born;
+		weight = new double[num_creature];
+		num_born = new int[num_creature];
+		max_la = -1e10;
+		min_la = 1e10;
+		for(int t1=0; t1<num_creature; t1++)
+		{
+			if(being[t1].living_advantage > max_la)
+				max_la = being[t1].living_advantage;
+			if(being[t1].living_advantage < min_la)
+				min_la = being[t1].living_advantage;
+		}
+		weight_sum = 0;
+		for(int t1=0; t1<num_creature; t1++)
+		{
+			weight[t1] = being[t1].living_advantage - min_la+1;
+			weight_sum += weight[t1];
+		}
+		for(int t1=0; t1<num_creature; t1++)
+		{
+			weight[t1] = weight[t1]/weight_sum*num_creature_opt;
+		}
+		for(int t1=0; t1<num_creature; t1++)
+		{
+			num_born[t1] = (int) weight[t1];
+			if((rand()/(double)RAND_MAX) < weight[t1]-num_born[t1])
+				num_born[t1]++;
+		}
+		// ready to spawn next generation
+		num_creature_next = 0;
+		for(int t1=0; t1<num_creature; t1++)
+			num_creature_next += num_born[t1];
+		being_next = new creature[num_creature_next];
+		for(int t1=0,ind=0; t1<num_creature; t1++)
+		{
+			for(int t2=0; t2<num_born[t1]; t2++)
+			{
+				being[t1].spawn(being_next[ind]);
+				ind++;
+			}
+		}
+		// kill previous generation
+		delete[] being;
+		being = being_next;
+		num_creature = num_creature_next;
+	
+		// test of new travel
+		for(int t1=0; t1<num_creature; t1++)
+		{
+			for(int t2=0; t2<1000; t2++)
+				being[t1].travel(m1);
+			being[t1].surviving();
+			cout<<being[t1].x<<'\t'<<being[t1].y<<'\t'<<num_gen<<endl;
+		}
 	}
-*/
 }

@@ -24,7 +24,10 @@ void creature :: init(int num_resource, code_dna* cdd, code_ptn* cpp, code_organ
 	stock.init(num_r);
 	damage.init(num_r);
 	// right now set default value for x,y to be zero
-	x = y = 0;
+	//x = y = 0;
+	// now set it between -100 and 100
+	x = (rand()/(double)RAND_MAX*2-1)*100;
+	y = (rand()/(double)RAND_MAX*2-1)*100;
 } 
 
 void creature :: dna_init(int length)
@@ -196,6 +199,33 @@ void creature :: travel(map& map0)
 //	for(int t1=0; t1<num_r; t1++)
 //		cout<<stock.list[t1]<<'\t'<<damage.list[t1]<<'\t';
 //	cout<<endl;
+}
+
+void creature :: surviving()
+{
+	double max_living_chance = 1e10;
+	double basic_chance = 0.01;
+	living_advantage = 0;
+	mutation_chance = 1;
+	for(int t1=0; t1<num_r; t1++)
+	{
+		if (cost.list[t1] > 0)
+			living_advantage += stock.list[t1] / cost.list[t1];
+		else
+			living_advantage += max_living_chance;
+		mutation_chance += log(1+damage.list[t1])/log(10);
+	}
+	mutation_chance *= basic_chance;
+}
+
+void creature :: spawn(creature& baby)
+{
+	baby.init(num_r,cd,cp,co);
+	baby.dna0 = dna0;
+	baby.dna0.mutate((int)(mutation_chance*dna0.length));
+	baby.translate();
+	baby.x = x;
+	baby.y = y;
 }
 
 void creature :: save_dna(ofstream& out)

@@ -27,10 +27,16 @@ private :
 	resource stock, damage;
 public :
 	double x,y;
+	// living status
+	double living_advantage;	// save stock/cost , sum for all resources, if no need one type of resource, add a very large number
+	double mutation_chance;		// use ln(1+damage) to get extra mutation chance, sum up for all resources, base chance is 1%
+
 	void init(int num_resource, code_dna*, code_ptn*, code_organ*);
 	void dna_init(int length);
 	void translate();
 	void travel(map& map0);
+	void surviving();
+	void spawn(creature& baby);
 
 	void save_dna(std::ofstream& out);
 	void load_dna(std::ifstream& in);
