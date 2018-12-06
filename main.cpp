@@ -18,7 +18,7 @@ int main()
 	int num_organ = 90000;
 	int len_gene = 9;
 	int num_resource = 2;
-	int num_creature_opt = 500;
+	int num_creature_opt = 1000;
 	int num_creature = num_creature_opt;
 	int num_creature_next;
 	// code
@@ -39,7 +39,7 @@ int main()
 	// for move
 	int move_max = 10000;
 	// for generation
-	int gen_max = 200;
+	int gen_max = 800;
 	// for load/save
 	int ini_from_file = 0;
 
@@ -102,10 +102,8 @@ int main()
 		being[t1].translate();
 	}
 	if (!ini_from_file)
-	{
 		out_dna.close();
-		out_dna.open("dna_last.dat");
-	}
+	out_dna.open("dna_last.dat");
 
 	// the trip of one generation
 	for(int t1=0; t1<num_creature; t1++)
