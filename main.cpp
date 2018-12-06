@@ -33,13 +33,13 @@ int main()
 	int *num_born=nullptr;
 	double max_la, min_la;
 	// for map
-	double A = 500, k1 = 0.04, k2 = 0.01, fhi = 3.14;
+	double A = 500, k1 = 0.004, k2 = 0.001, fhi = 3.14;
 	int num_cp = 4;
 	map m1;
 	// for move
 	int move_max = 10000;
 	// for generation
-	int gen_max = 800;
+	int gen_max = 400;
 	// for load/save
 	int ini_from_file = 0;
 
