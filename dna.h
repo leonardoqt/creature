@@ -18,7 +18,7 @@ public :
 	~dna();
 	void init(int num, int ll);
 	dna& operator=(const dna& );
-	void mutate(int num);
+	void mutate(double rate);
 
 	void save(std::ofstream & out);
 	void load(std::ifstream & in);

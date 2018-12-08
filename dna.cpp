@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <cstdlib>
 #include "dna.h"
 
 using namespace std;
@@ -40,14 +41,11 @@ dna& dna :: operator=(const dna& B)
 	return (*this);
 }
 
-void dna :: mutate(int num)
+void dna :: mutate(double rate)
 {
-	int ind;
-	for(int t1=0; t1<num; t1++)
-	{
-		ind = rand()%length;
-		chain[ind] = rand()%num_k;
-	}
+	for(int t1=0; t1<length; t1++)
+		if (rand()/(double)RAND_MAX < rate)
+			chain[t1] = rand()%num_k;
 }
 
 void dna :: save(ofstream& out)

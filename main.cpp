@@ -16,9 +16,9 @@ int main()
 	int num_ptn = 20;
 	int digit = 3;
 	int num_organ = 90000;
-	int len_gene = 9;
+	int len_gene = 6;
 	int num_resource = 2;
-	int num_creature_opt = 1000;
+	int num_creature_opt = 800;
 	int num_creature = num_creature_opt;
 	int num_creature_next;
 	// code
@@ -33,7 +33,7 @@ int main()
 	int *num_born=nullptr;
 	double max_la, min_la;
 	// for map
-	double A = 500, k1 = 0.004, k2 = 0.001, fhi = 3.14;
+	double A = 1000, k1 = 0.004, k2 = 0.001, fhi = 3.14;
 	int num_cp = 4;
 	map m1;
 	// for move

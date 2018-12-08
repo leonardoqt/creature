@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstring>
 #include <cstdlib>
+#include <cmath>
 #include "organ.h"
 #include "ptn.h"
 
@@ -77,13 +78,14 @@ void organ :: print_chain()
 void sensor :: init(int nn)
 {
 	double base_cost, base_harm;
+	double rarity = pow((rand()+1)/(double)RAND_MAX,4);
 	int t1;
 	cost.init(nn);
 	harm.init(nn);
 	type = rand()%nn;
-	range = (rand()+1)/(double)RAND_MAX * 100;	// 0-100
-	num_check = rand()%10 + 1;					// 1-10
-	acc = (rand()+1)/(double)RAND_MAX;				// 0-1
+	range = rarity*100 + (1-rarity)*((rand()+1)/(double)RAND_MAX)*100;			// 0-100
+	num_check = (int)(rarity*10) + (int)((1-rarity)*(rand()%10)) + 1;			// 1-10
+	acc = rarity + (1-rarity)*((rand()+1)/(double)RAND_MAX);						// 0-1
 	// range influence base cost and harm
 	// num_check influence base cost
 	// acc influence base harm
@@ -113,12 +115,13 @@ void sensor :: print()
 void mover :: init(int nn)
 {
 	double base_cost, base_harm;
+	double rarity = pow((rand()+1)/(double)RAND_MAX,4);
 	int t1;
 	cost.init(nn);
 	harm.init(nn);
 	type = rand()%nn;
-	acc = (rand()+1)/(double)RAND_MAX;
-	eff = (rand()+1)/(double)RAND_MAX;
+	acc = rarity + (1-rarity)*((rand()+1)/(double)RAND_MAX);
+	eff = rarity + (1-rarity)*((rand()+1)/(double)RAND_MAX);
 	base_cost = eff * 50;
 	base_harm = acc * 50;
 	t1 = rand()%nn;
@@ -143,12 +146,13 @@ void mover :: print()
 void collector :: init(int nn)
 {
 	double base_cost, base_harm;
+	double rarity = pow((rand()+1)/(double)RAND_MAX,4);
 	int t1;
 	cost.init(nn);
 	harm.init(nn);
 	type = rand()%nn;
 	c_p = (rand()%2)*2-1;
-	cap = (rand()+1)/(double)RAND_MAX * 5000;
+	cap = (rarity + (1-rarity)*((rand()+1)/(double)RAND_MAX)) * 5000;
 	base_cost = base_harm = cap / 20;
 	t1 = rand()%nn;
 	cost.list[t1] = base_cost + (rand()+1)/(double)RAND_MAX * (100-base_cost);

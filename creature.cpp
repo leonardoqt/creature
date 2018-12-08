@@ -203,7 +203,7 @@ void creature :: travel(map& map0)
 
 void creature :: surviving()
 {
-	double max_living_chance = 1e10;
+//	double max_living_chance = 1e10;
 	double basic_chance = 0.01;
 	living_advantage = 0;
 	mutation_chance = 1;
@@ -211,8 +211,8 @@ void creature :: surviving()
 	{
 		if (cost.list[t1] > 0)
 			living_advantage += stock.list[t1] / cost.list[t1];
-		else
-			living_advantage += max_living_chance;
+//		else
+//			living_advantage += max_living_chance;
 		mutation_chance += log(1+damage.list[t1])/log(10);
 	}
 	mutation_chance *= basic_chance;
@@ -222,7 +222,7 @@ void creature :: spawn(creature& baby)
 {
 	baby.init(num_r,cd,cp,co);
 	baby.dna0 = dna0;
-	baby.dna0.mutate((int)(mutation_chance*dna0.length));
+	baby.dna0.mutate(mutation_chance);
 	baby.translate();
 	baby.x = x;
 	baby.y = y;
